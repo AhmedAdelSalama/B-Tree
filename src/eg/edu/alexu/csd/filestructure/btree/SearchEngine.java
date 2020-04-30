@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SearchEngine implements ISearchEngine {
 	/*How to define minDegree ??*/
-	BTree<String , String> tree;
+	private BTree<String , String> tree;
 	public SearchEngine(int minDegree){
 		if(minDegree <2)
 			throw new RuntimeErrorException(new ExceptionInInitializerError());
@@ -61,7 +61,6 @@ public class SearchEngine implements ISearchEngine {
 		/*It gives a list of all files and directories in the directory.*/
 		String[] fileList = directory.list();
 		if(fileList!= null) {
-			int i=0;
 			for (String s : fileList) {
 				File f = new File(s);
 				if (f.isDirectory()) {
@@ -102,8 +101,9 @@ public class SearchEngine implements ISearchEngine {
 	@Override
 	public List<ISearchResult> searchByWordWithRanking(String word) {
 		if(word == null )throw new RuntimeErrorException(null);
-		List<ISearchResult> re=new ArrayList<ISearchResult>();
-		if(word=="")return re;
+		List<ISearchResult> re= new ArrayList<>();
+		if(tree.getRoot() == null||word.equals(""))
+			return re;
         tree.searchInValue(tree.getRoot(),true,word,re);
         System.out.println(re.size()+"  SIZE ");
 		return re;
@@ -112,8 +112,9 @@ public class SearchEngine implements ISearchEngine {
 	@Override
 	public List<ISearchResult> searchByMultipleWordWithRanking(String sentence) {
 		if(sentence == null )throw new RuntimeErrorException(null);
-		List<ISearchResult> re=new ArrayList<ISearchResult>();
-		if(sentence=="")return re;
+		List<ISearchResult> re= new ArrayList<>();
+		if(tree.getRoot() == null||sentence.equals(""))
+			return re;
 		tree.searchInValue(tree.getRoot(),false,sentence,re);
 		System.out.println(re.size()+"  SIZE ");
 		return re;

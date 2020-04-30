@@ -479,7 +479,6 @@ public class BTree<K extends Comparable<K>, V> implements IBTree <K,V> {
 				}
 			}
 		}
-		return ;
 	}
 
 	public void searchBackup2(IBTreeNode<K,V>  n ,String s,List<ISearchResult> results){
